@@ -3,7 +3,7 @@
 namespace OpenMoonBoard.Domain.Interfaces;
 public interface ISettersRepository
 {
-    Task<List<Setter>> GetAllSetters();
+    Task<List<Setter>> GetAllUnsyncedSetters();
     Task InsertSetters(List<Setter> setters);
     Task SetSetterToSynced(int id, bool failed);
 }

@@ -9,23 +9,17 @@ public class MoonBoardRoutesRepository(OpenMoonBoardContext dbContext) : IMoonBo
 {
     public async Task AddRoutes(List<MoonBoardRoute> moonBoardRoutes)
     {
-        foreach(var  moonBoardRoute in moonBoardRoutes)
+        var alreadyInsertedRouteNames = await dbContext.MoonBoardRoutes.Select(x => x.Name).ToListAsync();
+        foreach (var  moonBoardRoute in moonBoardRoutes)
         {
-            var alreadyInserted = await IsRouteAlreadyInserted(moonBoardRoute.Name);
+            var alreadyInserted = alreadyInsertedRouteNames.Contains(moonBoardRoute.Name);
             //Ignore rows that have already been inserted
             if (alreadyInserted) continue;
 
             await dbContext.MoonBoardRoutes.AddAsync(moonBoardRoute);
+            alreadyInsertedRouteNames.Add(moonBoardRoute.Name);
         }
 
         dbContext.SaveChanges();
-    }
-    private async Task<bool> IsRouteAlreadyInserted(string name)
-    {
-        var result = await dbContext.MoonBoardRoutes
-            .AsNoTracking()
-            .AnyAsync(x => x.Name == name);
-
-        return result;
     }
 }

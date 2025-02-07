@@ -15,7 +15,7 @@ public class SyncAllClimbsFromSettersInDatabaseCommandHandler(
 {
     public async Task<Unit> Handle(SyncAllClimbsFromSettersInDatabaseCommand query, CancellationToken cancellationToken)
     {
-        var setters = await settersRepository.GetAllSetters();
+        var setters = await settersRepository.GetAllUnsyncedSetters();
 
         foreach (var setter in setters)
         {

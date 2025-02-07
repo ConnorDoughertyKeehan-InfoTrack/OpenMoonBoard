@@ -8,25 +8,23 @@ public class SettersRepository(OpenMoonBoardContext dbContext) : ISettersReposit
 {
     public async Task InsertSetters(List<Setter> setters)
     {
-        var existingIdentifiers = await dbContext.Setters
-            .Where(s => setters.Select(x => x.SetterIdentifier).Contains(s.SetterIdentifier))
-            .Select(s => s.SetterIdentifier)
-            .ToListAsync();
-
-        var newSetters = setters
-            .Where(s => !existingIdentifiers.Contains(s.SetterIdentifier))
-            .ToList();
-
-        if (newSetters.Any())
+        var alreadyInsertedSetterIdentifiers = await dbContext.Setters.Select(x => x.SetterIdentifier).ToListAsync();
+        foreach (var setter in setters)
         {
-            await dbContext.Setters.AddRangeAsync(newSetters);
-            await dbContext.SaveChangesAsync();
+            var alreadyInserted = alreadyInsertedSetterIdentifiers.Contains(setter.SetterIdentifier);
+            //Ignore rows that have already been inserted
+            if (alreadyInserted) continue;
+
+            await dbContext.Setters.AddAsync(setter);
+            alreadyInsertedSetterIdentifiers.Add(setter.SetterIdentifier);
         }
+
+        await dbContext.SaveChangesAsync();
     }
 
-    public async Task<List<Setter>> GetAllSetters()
+    public async Task<List<Setter>> GetAllUnsyncedSetters()
     {
-        var result = await dbContext.Setters.Where(x=> x.Synced ==  false).AsNoTracking().ToListAsync();
+        var result = await dbContext.Setters.Where(x=> x.Synced == false || x.IncompleteSync == true).AsNoTracking().ToListAsync();
 
         return result;
     }
