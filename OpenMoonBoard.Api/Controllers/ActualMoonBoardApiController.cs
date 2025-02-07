@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using OpenMoonBoard.Api.Controllers.Base;
 using OpenMoonBoard.Application.Features.ActualMoonBoardApi.Client;
 using OpenMoonBoard.Application.Features.ActualMoonBoardApi.Client.Responses;
+using OpenMoonBoard.Application.Features.ActualMoonBoardApi.Commands.SyncAllClimbsFromSettersInDatabase;
 using OpenMoonBoard.Application.Features.ActualMoonBoardApi.Commands.SyncRavioliBicepsAndHoseokLeesLogBookSetters;
 using OpenMoonBoard.Application.Features.ActualMoonBoardApi.Models;
 using OpenMoonBoard.Application.Features.ActualMoonBoardApi.Queries.GetBenchMarks;
@@ -22,6 +23,14 @@ public class ActualMoonBoardApiController(IMediator mediator) : BaseOpenMoonBoar
     public async Task<IActionResult> SyncRBicepsAndHLeesLogBookSetters([FromBody] MoonBoardCredentials credentials)
     {
         await mediator.Send(new SyncRBicepsAndHLeesLogBookSettersCommand { Credentials = credentials });
+
+        return NoContent();
+    }
+
+    [HttpPost("SyncAllClimbsFromSettersInDatabase")]
+    public async Task<IActionResult> SyncAllClimbsFromSettersInDatabase([FromBody] MoonBoardCredentials credentials)
+    {
+        await mediator.Send(new SyncAllClimbsFromSettersInDatabaseCommand { Credentials = credentials });
 
         return NoContent();
     }
