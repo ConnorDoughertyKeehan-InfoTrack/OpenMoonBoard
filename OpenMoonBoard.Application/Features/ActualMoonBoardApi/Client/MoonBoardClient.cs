@@ -29,7 +29,7 @@ public class MoonBoardClient : IMoonBoardClient
         await LoginAsync(credentials.Username, credentials.Password);
         var url = $"https://www.moonboard.com/Account/GetLogbook/{userIdentifier}";
 
-        var logbookDays = await genericMoonBoardRequest<LogbookDayId>(url);
+        var (logbookDays, _) = await genericMoonBoardRequest<LogbookDayId>(url);
 
         HashSet<SetterResponse> settersHash = new HashSet<SetterResponse>();
 
@@ -38,7 +38,7 @@ public class MoonBoardClient : IMoonBoardClient
         {
             var problemsRequestUrl = $"https://www.moonboard.com/Account/GetLogbookEntries/{userIdentifier}/{logbookDay.Id}";
 
-            var logbookDayResponses = await genericMoonBoardRequest<ProblemData>(problemsRequestUrl);
+            var (logbookDayResponses, _) = await genericMoonBoardRequest<ProblemData>(problemsRequestUrl);
 
             //This gets every climb logged in said day
             foreach (var climb in logbookDayResponses)
@@ -55,26 +55,21 @@ public class MoonBoardClient : IMoonBoardClient
     {
         await LoginAsync(credentials.Username, credentials.Password);
         var url = "https://www.moonboard.com/Dashboard/GetBenchmarks";
-        var result = await genericMoonBoardRequest<BenchmarkData>(url);
+        var (result, _) = await genericMoonBoardRequest<BenchmarkData>(url);
 
         return result;
     }
 
-    public async Task<List<Problem>> GetAllClimbsBySetterIds(MoonBoardCredentials credentials, List<string> setterIds)
+    public async Task<(List<Problem>, bool)> GetAllClimbsBySetterId(MoonBoardCredentials credentials, string setterId)
     {
         await LoginAsync(credentials.Username, credentials.Password);
-        List<Problem> problems = [];
 
-        foreach (var setterId in setterIds)
-        {
-            var settersProblemsUrl = $"https://www.moonboard.com/Account/GetProblems/{setterId}";
+        var settersProblemsUrl = $"https://www.moonboard.com/Account/GetProblems/{setterId}";
 
-            //This is the only endpoint that actually gives the moves on the climbs
-            var settersProblems = await genericMoonBoardRequest<Problem>(settersProblemsUrl);
-            problems.AddRange(settersProblems);
-        }
+        //This is the only endpoint that actually gives the moves on the climbs
+        var (problems, failed) = await genericMoonBoardRequest<Problem>(settersProblemsUrl);
 
-        return problems;
+        return (problems, failed);
     }
 
     private async Task LoginAsync(string username, string password)
@@ -117,9 +112,10 @@ public class MoonBoardClient : IMoonBoardClient
     }
 
     //With default 2016 filter
-    private async Task<List<T>> genericMoonBoardRequest<T>(string url, string? filter = "setupId~eq~'1'~and~Configuration~eq~3")
+    private async Task<(List<T>, bool)> genericMoonBoardRequest<T>(string url, string? filter = "setupId~eq~'1'~and~Configuration~eq~3")
     {
         List<T> result = [];
+        bool failed = false;
         try
         {
             var pageLength = 20;
@@ -155,9 +151,10 @@ public class MoonBoardClient : IMoonBoardClient
         }
         catch (Exception ex)
         {
+            failed = true;
             Console.WriteLine(ex.ToString());
         }
 
-        return result;
+        return (result, failed);
     }
 }

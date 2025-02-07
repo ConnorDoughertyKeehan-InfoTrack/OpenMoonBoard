@@ -5,5 +5,5 @@ public interface ISettersRepository
 {
     Task<List<Setter>> GetAllSetters();
     Task InsertSetters(List<Setter> setters);
-    Task SetSetterToSynced(int id);
+    Task SetSetterToSynced(int id, bool failed);
 }

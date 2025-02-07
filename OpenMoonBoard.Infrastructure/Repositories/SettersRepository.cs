@@ -31,7 +31,7 @@ public class SettersRepository(OpenMoonBoardContext dbContext) : ISettersReposit
         return result;
     }
 
-    public async Task SetSetterToSynced(int id)
+    public async Task SetSetterToSynced(int id, bool failed)
     {
         var setter = await dbContext.Setters.SingleOrDefaultAsync(x => x.Id == id);
         if (setter == null) {
@@ -39,6 +39,7 @@ public class SettersRepository(OpenMoonBoardContext dbContext) : ISettersReposit
         }
 
         setter.Synced = true;
+        setter.IncompleteSync = failed;
         await dbContext.SaveChangesAsync();
     }
 }

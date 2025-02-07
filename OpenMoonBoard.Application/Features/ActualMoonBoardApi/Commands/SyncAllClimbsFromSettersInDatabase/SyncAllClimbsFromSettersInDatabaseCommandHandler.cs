@@ -2,11 +2,6 @@
 using OpenMoonBoard.Application.Features.ActualMoonBoardApi.Client.Responses;
 using OpenMoonBoard.Application.Features.ActualMoonBoardApi.Client;
 using OpenMoonBoard.Domain.Models.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using OpenMoonBoard.Domain.Interfaces;
 
 namespace OpenMoonBoard.Application.Features.ActualMoonBoardApi.Commands.SyncAllClimbsFromSettersInDatabase;
@@ -24,10 +19,10 @@ public class SyncAllClimbsFromSettersInDatabaseCommandHandler(
 
         foreach (var setter in setters)
         {
-            var problems = await moonBoardClient.GetAllClimbsBySetterIds(query.Credentials, [setter.SetterIdentifier]);
+            var (problems, failed) = await moonBoardClient.GetAllClimbsBySetterId(query.Credentials, setter.SetterIdentifier);
             var routes = await MapApiProblemsToRoute(problems);
             await moonBoardRoutesRepository.AddRoutes(routes);
-            await settersRepository.SetSetterToSynced(setter.Id);
+            await settersRepository.SetSetterToSynced(setter.Id, failed);
         }
 
         return Unit.Value;
