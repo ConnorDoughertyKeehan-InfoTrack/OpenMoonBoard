@@ -3,7 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.10.35013.160
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OpenMoonBoard", "OpenMoonBoard.csproj", "{843C48AF-C73D-4C95-B63D-F01E288E1C1E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OpenMoonBoard.Api", "OpenMoonBoard.Api\OpenMoonBoard.Api.csproj", "{D6B900DD-2930-43EF-9D73-BA81A995C6D4}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OpenMoonBoard.Application", "OpenMoonBoard.Application\OpenMoonBoard.Application.csproj", "{30760B2F-193E-46D6-A57F-7260C34545E2}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OpenMoonBoard.Domain", "OpenMoonBoard.Domain\OpenMoonBoard.Domain.csproj", "{C50F4867-F877-49E1-8D3A-8F02A5068243}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OpenMoonBoard.Infrastructure", "OpenMoonBoard.Infrastructure\OpenMoonBoard.Infrastructure.csproj", "{9241BE69-986C-49F3-96CD-04388D48D8E2}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -11,10 +17,22 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{843C48AF-C73D-4C95-B63D-F01E288E1C1E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{843C48AF-C73D-4C95-B63D-F01E288E1C1E}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{843C48AF-C73D-4C95-B63D-F01E288E1C1E}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{843C48AF-C73D-4C95-B63D-F01E288E1C1E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D6B900DD-2930-43EF-9D73-BA81A995C6D4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D6B900DD-2930-43EF-9D73-BA81A995C6D4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D6B900DD-2930-43EF-9D73-BA81A995C6D4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D6B900DD-2930-43EF-9D73-BA81A995C6D4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{30760B2F-193E-46D6-A57F-7260C34545E2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{30760B2F-193E-46D6-A57F-7260C34545E2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{30760B2F-193E-46D6-A57F-7260C34545E2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{30760B2F-193E-46D6-A57F-7260C34545E2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C50F4867-F877-49E1-8D3A-8F02A5068243}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C50F4867-F877-49E1-8D3A-8F02A5068243}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C50F4867-F877-49E1-8D3A-8F02A5068243}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C50F4867-F877-49E1-8D3A-8F02A5068243}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9241BE69-986C-49F3-96CD-04388D48D8E2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9241BE69-986C-49F3-96CD-04388D48D8E2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9241BE69-986C-49F3-96CD-04388D48D8E2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9241BE69-986C-49F3-96CD-04388D48D8E2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

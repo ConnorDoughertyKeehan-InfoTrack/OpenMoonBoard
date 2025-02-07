@@ -1,0 +1,36 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <UserSecretsId>3beea7d3-2012-4cd2-aa2f-18a568920088</UserSecretsId>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="SeedData\**" />
+    <Compile Remove="SqlScripts\**" />
+    <Content Remove="SeedData\**" />
+    <Content Remove="SqlScripts\**" />
+    <EmbeddedResource Remove="SeedData\**" />
+    <EmbeddedResource Remove="SqlScripts\**" />
+    <None Remove="SeedData\**" />
+    <None Remove="SqlScripts\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="MediatR" Version="12.4.1" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="8.0.12" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.12" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="8.0.12" />
+    <PackageReference Include="Microsoft.IdentityModel.JsonWebTokens" Version="8.3.1" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\OpenMoonBoard.Application\OpenMoonBoard.Application.csproj" />
+    <ProjectReference Include="..\OpenMoonBoard.Domain\OpenMoonBoard.Domain.csproj" />
+    <ProjectReference Include="..\OpenMoonBoard.Infrastructure\OpenMoonBoard.Infrastructure.csproj" />
+  </ItemGroup>
+
+</Project>
